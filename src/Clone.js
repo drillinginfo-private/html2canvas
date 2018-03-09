@@ -24,7 +24,7 @@ export class DocumentCloner {
     scrolledElements: Array<[HTMLElement, number, number]>;
     referenceElement: HTMLElement;
     clonedReferenceElement: HTMLElement;
-    documentElement: HTMLElement;
+-    documentElement: HTMLElement;
     resourceLoader: ResourceLoader;
     logger: Logger;
     options: Options;
@@ -230,9 +230,17 @@ export class DocumentCloner {
         }
 
         if (node instanceof HTMLStyleElement && node.sheet && node.sheet.cssRules) {
-            const css = [].slice
-                .call(node.sheet.cssRules, 0)
-                .reduce((css, rule) => css + rule.cssText, '');
+            const css = [].slice.call(node.sheet.cssRules, 0).reduce((css, rule) => {
+                try {
+                    if (rule && rule.cssText) {
+                        return css + rule.cssText;
+                    }
+                    return css;
+                } catch (err) {
+                    this.logger.log('Unable to access cssText property', rule.name);
+                    return css;
+                }
+            });
             const style = node.cloneNode(false);
             style.textContent = css;
             return style;
