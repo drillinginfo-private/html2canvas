@@ -24,7 +24,7 @@ export class DocumentCloner {
     scrolledElements: Array<[HTMLElement, number, number]>;
     referenceElement: HTMLElement;
     clonedReferenceElement: HTMLElement;
--    documentElement: HTMLElement;
+    documentElement: HTMLElement;
     resourceLoader: ResourceLoader;
     logger: Logger;
     options: Options;
