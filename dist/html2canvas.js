@@ -6291,7 +6291,7 @@ var DocumentCloner = exports.DocumentCloner = function () {
                         _this3.logger.log('Unable to access cssText property', rule.name);
                         return css;
                     }
-                });
+                }, '');
                 var style = node.cloneNode(false);
                 style.textContent = css;
                 return style;
